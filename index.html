@@ -54,6 +54,9 @@
                     tips and tricks to get you going.
                     CLI is seeing more use compared to 5 years prior, especially BSD-based
                     Mac OS X. Hopefully even if you're wizened, you'll learn some new tricks.
+                    My background started in MS-DOS 5.0 in 1995. Didn't like Win95.
+                    Introduced to Redhat 7.2 in 2001, Knoppix, DSL.
+                    2006 and on, Ubuntu. 2012, Mac reluctantly embraced.
                     </aside>
 				</section>
 
@@ -73,7 +76,7 @@
 				</section>
                 <section>
                     <div style="text-align: left;">
-                        <code>
+                        <code data-trim>
                             $ <span class="fragment">input</span>
                             <br/>
                             <span class="fragment">output</span>
@@ -207,7 +210,7 @@
                     <img src="img/mcilroy.jpg" alt="McIlroy" />
                     <h3>4 Tenets</h3>
                     <aside class="notes">
-                    * This is Doug McIlroy. He is the inventor of pipes, which we'll talk about shorlty.
+                    * This dapper lad is Doug McIlroy. He is the inventor of pipes, which we'll talk about shorlty.
                         * Some say this guy can read data from /dev/null
                         * In 1984, the Department of Justice broke up AT&T because they had a monopoly. On Doug McIlroy. 
                         * He wrote three guiding principles for the Unix philosophy.
@@ -249,6 +252,7 @@
                 </section>
 
                 <section data-background="img/whoa.jpg">
+                    <aside class="notes">I don't know about you, but... whoa.</aside>
                 </section>
 
                 <section>
@@ -301,8 +305,189 @@
                 </section>
 
                 <section>
+                    <h3>More reasons...</h3>
+                    <aside class="notes>">
+                    <ul>
+                        <li>You're probably already using it.</li>
+                        <li>You'll be able to work from nearly any *nix based platform.</li>
+                        <li>Huge set of tools already exists to make your life easier.</li>
+                    </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Reason's not to...</h3>
+                </section>
+
+                <section>
+                    <img src="img/hugemistake.png" alt="mistake" />
+                    <aside class="notes">
+                    The learning curve might seem a little steep at first.
+                    It seems intimidating, but it isn't.
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>Advanced Beginner,</h2>
+                    <h2>Competent,</h2>
+                    <h2>Or Proficient?</h2>
+                    <aside class="notes">
+                        A lot of us may edge into the advanced beginner or competent
+                        but the sweet spot is proficient. That's where I want to be.
+                        I'm too dumb to be an expert, but you can aim for that.
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>So where do I start?</h3>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Amazon EC2 instance w/ Ubuntu</li>
+                        <li>Ubuntu Live CD</li>
+                        <li>Mac OS X + homebrew</li>
+                        <li>Cygwin (if you must)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h1>Getting Around</h1>
+                    <aside class="notes">
+                        One of the first frustrations I see with shell
+                        inductees is getting around without a mouse.
+                        Moving the cursor around is not intuitive.
+                    </aside>
+                </section>
+
+                <section>
                     <h1>Shell it Live!</h1>
                     <h3>Hope I don't screw it up!</h3>
+                </section>
+
+                <section>
+<p>Moving the cursor:</p>
+<pre>  Ctrl + a   Go to the beginning of the line (Home)
+  Ctrl + e   Go to the End of the line (End)
+  Ctrl + p   Previous command (Up arrow)
+  Ctrl + n   Next command (Down arrow)
+   Alt + b   Back (left) one word
+   Alt + f   Forward (right) one word
+  Ctrl + f   Forward one character
+  Ctrl + b   Backward one character
+  Ctrl + xx  Toggle between the start of line and current cursor position</pre>
+                </section>
+
+                <section>
+<p>Editing:</p>
+<pre> Ctrl + L   Clear the Screen, similar to the clear command
+ Ctrl + u   Cut/delete the line before the cursor position.
+  Alt + Del Delete the Word before the cursor.
+  Alt + d   Delete the Word after the cursor.
+ Ctrl + d   Delete character under the cursor
+ Ctrl + h   Delete character before the cursor (backspace)
+ Ctrl + w   Cut the Word before the cursor to the clipboard.
+ Ctrl + k   Cut the Line after the cursor to the clipboard.
+  Alt + t   Swap current word with previous
+ Ctrl + t   Swap the last two characters before the cursor (typo).
+ Esc  + t   Swap the last two words before the cursor.
+ ctrl + y   Paste the last thing to be cut (yank)
+  Alt + r   Cancel the changes and put back the line as it was in the history (revert).
+ ctrl + _   Undo
+                </section>
+
+                <section>
+                    <img src="img/mac_esc_key.png" alt="mac esc" />
+                </section>
+
+                <section>
+                    <h3>Where do all of these shortcuts come from?</h3>
+                </section>
+
+                <section>
+                    <h1>GNU Readline Library</h1>
+                    <aside class="notes">
+                    Comes in emacs and vim mode flavors.
+                    I didn't discover vim mode before it was too late. emacs is default.
+                    Congrats, you are now an emacs wizard! Better insure your wrists.
+                    Beauty is that these are consistently available in many places:
+                    MySQL, Postgres, Python REPL, Ruby REPL, even PHP Interactive Shell.
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Things you also get...</h3>
+                </section>
+
+                <section>
+                    <h2>Tab Completion</h2>
+                    <pre>
+$ ls Gr[tab]
+$ ls Gruntfile.js
+$ ls i[tab][tab]
+img/     index.html
+$ git commit [tab]
+$ git commit index.html
+</pre>
+                    <aside class="notes">
+                    Auto completes files and directories, and even 
+                    arguments to commands.
+                     Can be very clever if you
+                    install some addon packages that
+                    will auto complete hostnames, context-sensitive
+                    arguments, and more.</aside>
+                </section>
+
+                <section>
+                    <h2>GNU History Library</h2>
+<pre>
+  Ctrl + r   Search back through history
+  Ctrl + s   Search forward through history
+   Alt + .   Use the last word of the previous command
+  Ctrl + g   Escape from history searching mode
+</pre>
+                </section>
+
+                <section>
+                    <h3>On argument reuse...</h3>
+                </section>
+
+                <section>
+                    <pre>
+!!      Rerun previous command.
+!l      Rerun previous command starting with 'l'
+!l:p    Print (don't execute) last command starting with 'l'
+!$      Last argument in previous command.
+!*      All arguments in previous command.
+</pre>
+                </section>
+
+                <section>
+                <h1>Redirecting</h1>
+                </section>
+
+                <section>
+                    <img src="img/stdstreams.svg" alt="std streams" />
+                    <br/>
+                    <a href="http://en.wikipedia.org/wiki/File:Stdstreams-notitle.svg">Source: Wikipedia</a>
+                </section>
+
+                <section>
+                    <h3>stdout to file</h3>
+                    <pre><code class="bash"># sort lines and write to a file
+sort myfile.txt > sorted_myfile.txt
+# same as above, but append to existing file.
+$ sort myfile2.txt >> sorted_myfile.txt
+</code></pre>
+                </section>
+
+                <section>
+                    <h3>file to stdin</h3>
+<pre><code class="bash"># sort lines and print to stdout
+$ sort < myfile.txt
+# same, but let's print to a file.
+$ sort < myfile.txt > sorted_myfile.txt
+</code></pre>
                 </section>
 
                 <section>

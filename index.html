@@ -48,6 +48,13 @@
 					<p>
                         Brian Dailey (@byeliad)
 					</p>
+                    <aside class="notes">
+                    Hi! My name is Brian Dailey. This is a talk about the Unix shell
+                    environment. What it is, why you should know it, and some helpful
+                    tips and tricks to get you going.
+                    CLI is seeing more use compared to 5 years prior, especially BSD-based
+                    Mac OS X. Hopefully even if you're wizened, you'll learn some new tricks.
+                    </aside>
 				</section>
 
 				<section>
@@ -57,20 +64,24 @@
 					</p>
 
 					<aside class="notes">
-                        You know, keyboards, etc.
-                        The computer accepts input, and prints the output.
-                        At some point, it literally printed it.
+                    * If you don't know what the shell is at all, it's
+                        * a way to interface with computers that involves only a keyboard.
+                        * existed prior to the WIMP interface we know today.
+                        * evolved from typewriters connected to line printers.
+
 					</aside>
 				</section>
                 <section>
                     <div style="text-align: left;">
-                    <code>
-                    $ <span class="fragment">input</span>
-                    <br/>
-                    <div class="fragment">output</div>
-                    <div class="fragment">$ input</div>
-                    <div class="fragment">output</div>
-                    </code>
+                        <code>
+                            $ <span class="fragment">input</span>
+                            <br/>
+                            <span class="fragment">output</span>
+                            <br/>
+                            <span class="fragment">$ input</span>
+                            <br/>
+                            <span class="fragment">output</span>
+                        </code>
                     </div>
                     <aside class="notes">
                         When you start a shell, usually you'll see a simple text prompt and little else.
@@ -94,6 +105,9 @@
                         <br/>
                         Computer
                     </h3>
+                    <aside class="notes">
+                        You can think of the shell as a layer that sits between you and the computer
+                    </aside>
                 </section>
 
                 <section>
@@ -137,7 +151,11 @@
 
                 <section>
                     <p>You need not look like a wizard to be a CLUI wizard.</p>
-                    <img src="img/ken_n_dennis.jpg" />
+                    <img src="img/ken_n_dennis.jpg" alt="ken_n_dennis" />
+                    <aside class="notes">
+                    This is Ken Thompson and Dennis Ritchie, two
+                    developers of Unix and evangelists of the Unix philosophy.
+                    </aside>
                 </section>
 
                 <section>
@@ -146,38 +164,137 @@
 
                 <section>
                     <h2>Unix Philosophy</h2>
+                    <aside class="notes">
+                        Cobbed together over time by the core developers
+                        of the Unix operating system as well as those writing
+                        some of it's most commonly used tools.
+                    </aside>
                 </section>
 
                 <section>
                     <p><q>
-                    "Although [this] philosophy can't be written down in a single sentence, at its heart is the idea that the power of a system comes more from the relationships among programs than from the programs themselves. Many UNIX programs do quite trivial things in isolation, but, combined with other programs, become general and useful tools."
+                        "Although [this] philosophy can't be written down in a single sentence, at its heart is the idea that the power of a system comes more from the relationships among programs than from the programs themselves. Many UNIX programs do quite trivial things in isolation, but, combined with other programs, become general and useful tools."
                     </q>
                     <br/>
                     <br/>
                     &mdash; <u>The Unix Programming Environment</u></p>
+                    <aside class="notes">
+                    Now he said we can't summarize it in one sentence, but the key
+                    takeaway for this talk is...
+                    </aside>
                 </section>
 
                 <section>
                     <h3>Relationships &gt; Programs</h3>
+                    <aside class="notes">
+                    "...simplicity of both the interface and the
+                    implementation are more important than any other
+                    attributes of the system—including correctness, consistency,
+                    and completeness."
+                    To sum it up even further...
+                    </aside>
                 </section>
 
                 <section>
                     <h1>Modularity</h1>
+                    <aside class="notes">
+                    Components that can be arranged in many different ways.
+                    </aside>
+                </section>
+
+
+				<section>
+                    <img src="img/mcilroy.jpg" alt="McIlroy" />
+                    <h3>4 Tenets</h3>
+                    <aside class="notes">
+                    * This is Doug McIlroy. He is the inventor of pipes, which we'll talk about shorlty.
+                        * Some say this guy can read data from /dev/null
+                        * In 1984, the Department of Justice broke up AT&T because they had a monopoly. On Doug McIlroy. 
+                        * He wrote three guiding principles for the Unix philosophy.
+                    </aside>
+                </section>
+
+                <section><h1>1.</h1></section>
+                <section>
+                <p>Make each program do one thing well. To do a new job, build afresh rather than complicate old programs by adding new features.</p>
+                <aside class="notes">Modularity - composability - "components that can be selected and assembled in various combinations to satisfy specific user requirements." </aside>
+                </section>
+
+                <section><h1>2.</h1></section>
+                <section>
+                <p>Expect the output of every program to become the input to another, as yet unknown, program. Don't clutter output with extraneous information. Avoid stringently columnar or binary input formats. Don't insist on interactive input.</p>
+                <aside class="notes">
+                    Second, the ability to take the output of one and put it into another. Don't expect interactive input.
+                </aside>
+                </section>
+
+                <section><h1>3.</h1></section>
+                <section>
+                <p> Design and build software, even operating systems, to be tried early, ideally within weeks. Don't hesitate to throw away the clumsy parts and rebuild them.</p>
+                <aside class="notes">Strike forward, but don't be afraid to abandon dead end trails!</aside>
+                </section>
+
+                <section><h1>4.</h1></section>
+                <section>
+                <p> Use tools in preference to unskilled help to lighten a programming task, even if you have to detour to build the tools and expect to throw some of them out after you've finished using them.  </p>
+                <aside class="notes">Don't throw bodies at a problem that can be scripted.</aside>
                 </section>
 
                 <section>
-                    <p><q>"Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface."</q>
-                        <br/>
-                        <br/>
-                        &mdash; Doug McIlroy
-                        <br/>
-                        <small>Contributor to Unix pipes</small>
-                     </p>
+                <h3>So what does all of this mean for me?</h3>
                 </section>
 
                 <section>
-                    <h3>What this gets you...</h3>
-                    <p>Every tool you learn multiplies the usefulness<br/> of the tools you already know.</p>
+                <h4>Every *nix tool you learn multiples the<br/> usefulness of the ones you already know.</h4>
+                </section>
+
+                <section data-background="img/whoa.jpg">
+                </section>
+
+                <section>
+                <p><q>"Read a file of text, determine the n most frequently used words, and print out a sorted list of those words along with their frequencies."</q></p>
+                <aside class="notes">
+                This was a 'problem' posed for Donald Knuth to answer to demonstrate literate
+                programming. McIlroy was asked to write a literary style critique of it.
+                Knuth's solution was presented lucidly, but it was 10+ pages long.
+                He started out by appreciating the presentation and cleverness of the data structure, but then he dropped this...
+                </aside>
+                </section>
+
+                <section>
+<pre><code>1  tr -cs A-Za-z '\n' |
+2  tr A-Z a-z |
+3  sort |
+4  uniq -c |
+5  sort -rn |
+6  sed ${1}q
+</code></pre>
+                </section>
+
+                <section>
+                <p><q>"If you are not a UNIX adept, you may need a little explanation, but not much, to understand this pipeline of processes. The plan is easy:"</q></p>
+                </section>
+                <section>
+<pre><code>1  tr -cs A-Za-z '\n' |
+2  tr A-Z a-z |
+3  sort |
+</code></pre>
+                <ul>
+                    <li>Make one-word lines by transliterating the complement (-c) of the alphabet into newlines (note the quoted newline), and squeezing out (-s) multiple newlines.</li>
+                    <li>Transliterate upper case to lower case.</li>
+                    <li>Sort to bring identical words together.</li>
+                </ul>
+                </section>
+                <section>
+<pre><code>4  uniq -c |
+5  sort -rn |
+6  sed ${1}q
+</code></pre>
+                <ul>
+                    <li>Replace each run of duplicate words with a single representative and include a count (-c).</li>
+                    <li>Sort in reverse (-r) numeric (-n) order.</li>
+                    <li>Pass through a stream editor; quit (q) after printing the number of lines designated by the script’s first parameter (${1}).</li>
+                </ul>
                 </section>
 
                 <section data-background="img/mind-blown.gif">
@@ -188,7 +305,7 @@
                     <h3>Hope I don't screw it up!</h3>
                 </section>
 
-				<section>
+                <section>
 					<h1>THE END</h1>
 					<h3>BY Brian Dailey / @byeliad</h3>
                     <h2>Questions?</h2>

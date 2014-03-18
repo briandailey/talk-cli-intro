@@ -30,6 +30,8 @@
 				document.getElementsByTagName( 'head' )[0].appendChild( link );
 			}
 		</script>
+        <style>
+            div#notes { font-size: 80%; }</style>
 
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
@@ -182,6 +184,7 @@
                     <br/>
                     &mdash; <u>The Unix Programming Environment</u></p>
                     <aside class="notes">
+                    In their preface to the 1984 book, The UNIX Programming Environment, Brian Kernighan and Rob Pike, both from Bell Labs, give a brief description of the Unix design and the Unix philosophy...
                     Now he said we can't summarize it in one sentence, but the key
                     takeaway for this talk is...
                     </aside>
@@ -248,7 +251,7 @@
                 </section>
 
                 <section>
-                <h4>Every *nix tool you learn multiples the<br/> usefulness of the ones you already know.</h4>
+                <h4>Every *nix tool you learn multiplies the<br/> usefulness of the ones you already know.</h4>
                 </section>
 
                 <section data-background="img/whoa.jpg">
@@ -320,7 +323,7 @@
                 </section>
 
                 <section>
-                    <img src="img/hugemistake.png" alt="mistake" />
+                    <img src="img/huge_mistake.jpg" alt="mistake" />
                     <aside class="notes">
                     The learning curve might seem a little steep at first.
                     It seems intimidating, but it isn't.
@@ -361,11 +364,6 @@
                 </section>
 
                 <section>
-                    <h1>Shell it Live!</h1>
-                    <h3>Hope I don't screw it up!</h3>
-                </section>
-
-                <section>
 <p>Moving the cursor:</p>
 <pre>  Ctrl + a   Go to the beginning of the line (Home)
   Ctrl + e   Go to the End of the line (End)
@@ -394,10 +392,16 @@
  ctrl + y   Paste the last thing to be cut (yank)
   Alt + r   Cancel the changes and put back the line as it was in the history (revert).
  ctrl + _   Undo
+ </pre>
                 </section>
 
                 <section>
                     <img src="img/mac_esc_key.png" alt="mac esc" />
+                </section>
+
+                <section>
+                    <h1>Shell it Live!</h1>
+                    <h3>Hope I don't screw it up!</h3>
                 </section>
 
                 <section>
@@ -470,6 +474,12 @@ $ git commit index.html
                     <img src="img/stdstreams.svg" alt="std streams" />
                     <br/>
                     <a href="http://en.wikipedia.org/wiki/File:Stdstreams-notitle.svg">Source: Wikipedia</a>
+                    <aside class="notes">
+                        The shell introduces the concept of streams.
+                        stdin, stdout, and stderr. Typically, your
+                        keyboard is stdin and your display will receive
+                        stdout and stderr. However, this isn't always the case.
+                    </aside>
                 </section>
 
                 <section>
@@ -479,21 +489,263 @@ sort myfile.txt > sorted_myfile.txt
 # same as above, but append to existing file.
 $ sort myfile2.txt >> sorted_myfile.txt
 </code></pre>
+                    <aside class="notes">
+                        For starters, you can redir to a file.
+                        In the first example, stdout is redirected to
+                        a file. In the second example, we're doing the
+                        same thing but it appends to an existing file
+                        instead of overwriting it.
+                    </aside>
                 </section>
 
                 <section>
                     <h3>file to stdin</h3>
 <pre><code class="bash"># sort lines and print to stdout
-$ sort < myfile.txt
+$ sort &lt; myfile.txt
 # same, but let's print to a file.
-$ sort < myfile.txt > sorted_myfile.txt
+$ sort &lt; myfile.txt &gt; sorted_myfile.txt
 </code></pre>
+                    <aside class="notes">
+                        Here we are redirecting a file to stdin.
+                        The second example directs the stdout
+                        of that filter to a file.
+                    </aside>
+                </section>
+
+                <section>
+                    <img src="img/stdstreams-2.svg" alt="std streams" />
+                    <aside class="notes">
+                    You can also redirect from one program to another.
+                    This is where the real power of the Unix philosophy
+                    of composability kicks in. You can feed output from one
+                    program to another.
+                    </aside>
+                </section>
+
+                <section>
+                    <h1>|</h1>
+                    <aside class="notes">
+                        Filtering is indicated
+                        by the almighty pipe. All hail the pipe.
+                    </aside>
+                </section>
+
+                <section>
+                    <pre><code class="bash" data-trim>
+# Grab first line, replace tabs with line
+# return, and paginate with numbers.
+head -1 FLAT_RCL.txt | tr "\t" "\n" | less -N
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h1>Shell it Live!</h1>
+                    <aside class="notes">
+                        We're going to show how each of these commands work.
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Pipes: How do they work?</h3>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Each command spawns its own process.</li>
+                        <li>First program starts to push to stdout until it
+                        hits a buffer limit (imposed by your shell of choice).</li>
+                        <li>As soon as it hits the limit, the process is blocked.  </li>
+                        <li>First filter process starts reading stdin,
+                            and incrementally starts passing stdout to the next
+                            process.</li>
+                        <li>Some filters must wait until the entire output is available (e.g., sort) before
+                        they can continue, which can buffer to disk.</li>
+                        <li>Continues until the last process is reached.</li>
+                   </ul>
+                </section>
+
+                <section>
+                    <h3>Example from <a href="http://blog.petersobot.com/pipes-and-filters">Peter Sobot</a></h3>
+                    <pre><code class="bash" data-trim>
+cat /usr/share/dict/words |     # Read in the system's dictionary.
+grep purple |                   # Find words containing 'purple'
+awk '{print length($1), $1}' |  # Count the letters in each word
+sort -n |                       # Sort lines ("${length} ${word}")
+tail -n 1 |                     # Take the last line of the input
+cut -d " " -f 2 |               # Take the second part of each line
+cowsay -f tux                   # Print resulting word
+                    </code></pre>
+                    <p>Print out longest word containing 'purple'</p>
+                </section>
+                <section>
+                    <img src="img/pipeline_diagram.png" alt="diagram" />
+                </section>
+                <section>
+<pre><code>
+ _____________ 
+< unimpurpled >
+ ------------- 
+   \
+    \
+        .--.
+       |o_o |
+       |:_/ |
+      //   \ \
+     (|     | )
+    /'\_   _/`\
+    \___)=(___/
+</code></pre>
+                </section>
+
+                <section>
+                <p><q>"Thanks to the fact that the pipeline only stores what it can process in memory, this solution is very memory-efficient and lightweight. Processing a file of any size would not have changed the memory usage of this solution - the pipeline runs in effectively constant space."</q></p>
+                </section>
+
+                <section>
+                    <h3>This is pretty fast.</h3>
+                    <aside class="notes">
+                    As I will demonstrate in a moment, this is pretty fast.
+                    </aside>
+                </section>
+
+                <section>
+                    <h3> NHTSA's Office of Defects Investigation (ODI) - Recalls - Recalls Flat File</h3>
+
+                    <p><q>"Manufacturers who determine that a product or piece of original equipment either has a safety defect or is not in compliance with Federal safety standards are required to notify the National Highway Traffic Safety Administration (NHTSA) within 5 business days. "</q></p>
+                    <p>Source: <a href="http://catalog.data.gov/dataset/nhtsas-office-of-defects-investigation-odi-recalls-recalls-flat-file">Data.gov</a></p>
+                </section>
+
+                <section>
+                    <h1>Shell it Live!</h1>
+                </section>
+
+                <section>
+                    <p>If you are repeating yourself...</p>
+                </section>
+
+                <section>
+                    <h3>alias</h3>
+                    <pre><code data-trim>
+alias l='ls -lt'
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code data-trim>
+$ l
+-rw-r--r--  1 brian  staff  108847839 Mar 17 19:35 FLAT_RCL.csv
+-rw-r--r--  1 brian  staff       2407 Mar 17 19:16 RCL.txt
+-rwxr-xr-x@ 1 brian  staff  108847839 Mar 17 04:46 FLAT_RCL.txt
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Arguments get tacked on.</p>
+                    <pre><code data-trim>
+$ l FLAT_RCL.csv
+-rw-r--r--  1 brian  staff  108847839 Mar 17 19:35 FLAT_RCL.csv
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>But there are limits...</p>
+                    <pre><code data-trim class="bash">
+# this would be handy!
+$ alias headers = 'head -1 | tr "\t" "\n" | less -N'
+# but there's no convenient way to put the filename into the first filter.
+$ unalias headers
+$ function headers() { head -1 $1 | tr "\t" "\n" | less -N }
+# now we're cookin' with fire!
+headers FLAT_RCL.txt
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Another example...</p>
+                    <pre><code data-trim class="bash">
+$ function httphead () {
+            wget -O - -o /dev/null --save-headers $1 | \
+            wget -O - -o /dev/null --save-headers $1 | \
+            awk 'BEGIN{skip=0}{ if (($0)=="\r") {skip=1;}; \
+            if (skip==0) print $0 }'
+}
+$ httphead www.github.com
+HTTP/1.1 200 OK
+Server: GitHub.com
+Date: Tue, 18 Mar 2014 00:56:13 GMT
+Content-Type: text/html; charset=utf-8
+Status: 200 OK
+Cache-Control: private, max-age=0, must-revalidate
+Strict-Transport-Security: max-age=31536000
+...snip...
+                    </code></pre>
+                </section>
+
+                <section>
+                    <p>Let's say we wanted to see what HTTP headers
+                    Google and Github have in common.</p>
+                </section>
+
+                <section>
+                <h1>SHELL IT LIVE</h1>
+                </section>
+
+                <section>
+                <pre><code class="bash" data-trim>
+colordiff --side-by-side \
+    <(httphead google.com | cut -d ":" -f 1 | sort) \
+    <(httphead github.com | cut -d ":" -f 1 | sort) | \
+    grep -v "[<>|]"
+                </code></pre>
+                </section>
+
+                <section>
+                <h3>xargs</h3>
+                <p>Your poor man's map function.</p>
+                <pre><code class="bash" data-trim>
+# this will pass all files to tail -1 together
+find . -name "*.csv" | xargs tail -1
+# this will call tail -1 on each file individually
+find . -name "*.csv" | xargs -I {} tail -1 {}
+</code></pre>
+                </section>
+
+                <section>
+                    <p>You could live in the shell if you wanted to...</p>
+                </section>
+
+                <section><h3>vim</h3></section>
+                <section><h3>emacs</h3></section>
+                <section><h3>lynx</h3><p>(For the masochistic.)</section>
+
+                <section>
+                    <p>Wrap-up!</p>
+                    <aside class="notes">
+                    I hope that this talk has given you a
+                    tast of what's available out there, and
+                    you are motivated to read more.
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Additional Resources</h3>
+                    <ul>
+                        <li><a href="http://blog.petersobot.com/pipes-and-filters">Pipes and Filters</a></li>
+                        <li><a href="https://news.ycombinator.com/item?id=4481234">Unix Commands I Abuse Every DAy</a></li>
+                        <li><a href="http://software-carpentry.org/v4/shell/">Software Carpentry - The Shell</a>
+                        <br/><small>(Thanks, Jason Orendorff!)</small>
+                        </li>
+                        <li><a href="http://www.leancrew.com/all-this/2011/12/more-shell-less-egg/">More Shell, Less Egg</a></li>
+                        <li><a href="http://www.cs.dartmouth.edu/~sinclair/doug/">On McIlroy</a></li>
+                    </ul>
                 </section>
 
                 <section>
 					<h1>THE END</h1>
 					<h3>BY Brian Dailey / @byeliad</h3>
                     <h2>Questions?</h2>
+                    <p><a href="http://dailytechnology.net/talk-cli-intro/">dailytechnology.net/talk-cli-intro</a></p>
+                    <p><small>Thanks to Jason Orendorff, Jason Myers, and others for reviewing.</small></p>
 				</section>
 
 			</div>

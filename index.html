@@ -665,7 +665,6 @@ headers FLAT_RCL.txt
                     <pre><code data-trim class="bash">
 $ function httphead () {
             wget -O - -o /dev/null --save-headers $1 | \
-            wget -O - -o /dev/null --save-headers $1 | \
             awk 'BEGIN{skip=0}{ if (($0)=="\r") {skip=1;}; \
             if (skip==0) print $0 }'
 }
